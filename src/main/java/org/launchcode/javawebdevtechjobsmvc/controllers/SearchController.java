@@ -24,23 +24,25 @@ public class SearchController {
         return "search";
     }
 
+    // TODO #3 - Create a handler to process a search request and render the updated search view.
+
     @RequestMapping(value="results")
     public String displaySearchResults(Model model,@RequestParam String searchType,@RequestParam String searchTerm){
+
         ArrayList<Job> jobs ;
 
-        if ("searchTerm".toLowerCase().equals("all") || "searchTerm".toLowerCase().equals(null)) {
+        if (searchTerm.toLowerCase() == "all" || searchTerm.toLowerCase() == null) {
             jobs = JobData.findAll();
-            model.addAttribute("title", "All jobs");
 
         } else {
             jobs = JobData.findByColumnAndValue(searchType,searchTerm );
-            model.addAttribute("searchTerm", "Jobs with " + columnChoices.get(searchTerm) + ":" +  searchType);
 
         }
         model.addAttribute("joblist",jobs);
         model.addAttribute("columns",columnChoices);
+
         return "search";
     }
 
-    // TODO #3 - Create a handler to process a search request and render the updated search view.
+
 }
